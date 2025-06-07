@@ -1,0 +1,44 @@
+def calculator(expression: str):
+    # Удаляем пробелы и проверяем валидность ввода
+    expression = expression.replace(" ", "")
+    
+    operators = ['+', '-', '*', '/']
+    operator_found = None
+
+    for op in operators:
+        if op in expression:
+            if expression.count(op) == 1:
+                operator_found = op
+                break
+            else:
+                raise ValueError("Неверный формат: более одного оператора.")
+
+    if not operator_found:
+        raise ValueError("Неверный формат: оператор не найден.")
+    
+    a_str, b_str = expression.split(operator_found)
+
+    if not (a_str.isdigit() and b_str.isdigit()):
+        raise ValueError("Ожидались только целые числа.")
+
+    a = int(a_str)
+    b = int(b_str)
+
+    if not (1 <= a <= 10 and 1 <= b <= 10):
+        raise ValueError("Числа должны быть от 1 до 10 включительно.")
+
+    if operator_found == '+':
+        return a + b
+    elif operator_found == '-':
+        return a - b
+    elif operator_found == '*':
+        return a * b
+    elif operator_found == '/':
+        return a // b  # Целочисленное деление
+
+# Примеры использования:
+try:
+    result = calculator("3 + 5")
+    print(result)
+except ValueError as e:
+    print("Ошибка:", e)
